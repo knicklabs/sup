@@ -6,7 +6,8 @@
 
 1. Download the latest release from [releases](https://github.com/knicklabs/sup/releases).
 2. Copy the binary to the desired directory on your computer.
-3. Add the path to that directory to your path.
+3. Rename the binary to `sup` or `sup.exe` (on Windows).
+4. Add the path to that directory to your path.
 
 Here's an example of how to add a directory to your path in bash:
 
@@ -17,6 +18,12 @@ echo "PATH:\$PATH:/path/to/dir" >> ~/.bash_profile
 In the above example, replace `/path/to/dir` with the path to the binary.
 
 Restart your terminal or run `source ~/.bash_profile` for changes to take effect.
+
+### Dependencies
+
+The Linux version requires xclip. Without xclip, copy functionality will not work. Install xclip on Debian-based distributions with `sudo apt install xclip`.
+
+There are no dependencies for Mac or Windows.
 
 ## Usage
 
