@@ -16,6 +16,8 @@ echo "PATH:\$PATH:/path/to/dir" >> ~/.bash_profile
 
 In the above example, replace `/path/to/dir` with the path to the binary.
 
+Restart your terminal or run `source ~/.bash_profile` for changes to take effect.
+
 ## Usage
 
 In your terminal, run the `sup` command.
