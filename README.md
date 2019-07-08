@@ -6,8 +6,9 @@
 
 1. Download the latest release from [releases](https://github.com/knicklabs/sup/releases).
 2. Copy the binary to the desired directory on your computer.
-3. Rename the binary to `sup` or `sup.exe` (on Windows).
-4. Add the path to that directory to your path.
+3. Rename the binary to `sup` (on Linux and Mac) or `sup.exe` (on Windows).
+4. Make the file exuctable with `chmod +x sup` (on Linux and Mac)
+5. Add the path to that directory to your path.
 
 Here's an example of how to add a directory to your path in bash:
 
