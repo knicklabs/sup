@@ -74,7 +74,7 @@ func MakeDir(dir string) error {
 
 // WriteStringToFile writes a string to a file.
 func WriteStringToFile(dir, fn, str string) error {
-	f, err := os.OpenFile(path.Join(dir, fn), os.O_APPEND|os.O_CREATE, 0666)
+	f, err := os.OpenFile(path.Join(dir, fn), os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return err
 	}
