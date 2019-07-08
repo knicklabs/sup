@@ -3,7 +3,8 @@ package actions
 import (
 	"fmt"
 
-	"github.com/knicklabs/sup/utils"
+	"github.com/knicklabs/sup/tasks"
+	"github.com/knicklabs/sup/utils/cmd"
 
 	"gopkg.in/urfave/cli.v1"
 )
@@ -15,9 +16,9 @@ func List(c *cli.Context) error {
 	var err error
 	
 	if c.Bool("prev") == true {
-		txt, err = utils.PreviousTasks()
+		txt, err = tasks.Previous()
 	} else {
-		txt, err = utils.TodaysTasks()
+		txt, err = tasks.Current()
 	}
 	
 	if err != nil {
@@ -25,5 +26,9 @@ func List(c *cli.Context) error {
 	}
 
 	fmt.Println(txt)
+	if c.Bool("copy") == true {
+		cmd.Copy(txt)
+	}
+
 	return nil
 }

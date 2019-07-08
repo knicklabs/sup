@@ -14,6 +14,10 @@ var List = cli.Command{
 	Action:    actions.List,
 	Flags:     []cli.Flag{
 		cli.BoolFlag{
+			Name: "copy",
+			Usage: "Copy the output to the clipboard",
+		},
+		cli.BoolFlag{
 			Name:  "prev",
 			Usage: "Show the previous day's tasks",
 		},

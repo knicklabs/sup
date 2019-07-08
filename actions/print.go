@@ -5,13 +5,13 @@ import (
 
 	"gopkg.in/urfave/cli.v1"
 
+	"github.com/knicklabs/sup/tasks"
 	"github.com/knicklabs/sup/utils/cmd"
-	"github.com/knicklabs/sup/utils"
 )
 
 // Print prints Yesterday's and Today's tasks.
 func Print(c *cli.Context) error {
-	txt, err := utils.TodayAndPreviousTasks()
+	txt, err := tasks.CurrentAndPrevious()
 	if err != nil {
 		return err
 	}

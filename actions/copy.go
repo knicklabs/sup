@@ -5,14 +5,14 @@ import (
 
 	"gopkg.in/urfave/cli.v1"
 
+	"github.com/knicklabs/sup/tasks"
 	"github.com/knicklabs/sup/utils/cmd"
-	"github.com/knicklabs/sup/utils"
 )
 
 // Copy copies Yesterday's and Today's tasks to the
 // clipboard.
 func Copy(c *cli.Context) error {
-	txt, err := utils.TodayAndPreviousTasks()
+	txt, err := tasks.CurrentAndPrevious()
 	if err != nil {
 		return err
 	}

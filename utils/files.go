@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -43,11 +44,7 @@ func GetPreviousFilename(dir string) (string, error) {
 		return prevFile.Name(), nil
 	}
 
-	if len(files) > 0 {
-		return files[len(files)-1].Name(), nil
-	}
-
-	return "", nil
+	return "", errors.New("utils: File Not Found")
 }
 
 // GetDir returns the default directory.
