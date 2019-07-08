@@ -24,6 +24,7 @@ func Copy(input string) {
 
 // Open opens the URI using the OS default program or
 // the program specified by the appName.
+// Adapted from https://github.com/skratchdot/open-golang
 func Open(input, appName string) {
 	var cmd *exec.Cmd
 
