@@ -1,3 +1,21 @@
+# SUP
+
+> Simple task tracker for daily standups
+
+## Installation
+
+1. Download the latest release from [releases](https://github.com/knicklabs/sup/releases).
+2. Copy the binary to the desired directory on your computer.
+3. Add the path to that directory to your path.
+
+Here's an example of how to add a directory to your path in bash:
+
+```
+echo "PATH:\$PATH:/path/to/dir" >> ~/.bash_profile
+```
+
+In the above example, replace `/path/to/dir` with the path to the binary.
+
 ## Usage
 
 In your terminal, run the `sup` command.
@@ -46,6 +64,12 @@ USAGE:
 
 OPTIONS:
    --copy  Copy the output to the clipboard
+```
+
+To add a new task:
+
+```
+sup add "Write a blog post"
 ```
 
 ## Thanks
