@@ -41,7 +41,7 @@ NAME:
    sup - simple task tracker for daily standups
 
 USAGE:
-   main.exe [global options] command [command options] [arguments...]
+   sup [global options] command [command options] [arguments...]
 
 VERSION:
    0.1.0
@@ -67,10 +67,10 @@ For example, `sup print --help` will output:
 
 ```
 NAME:
-   main.exe print - Print Yesterday's and Today's tasks
+   sup print - Print Yesterday's and Today's tasks
 
 USAGE:
-   main.exe print [command options] [arguments...]
+   sup print [command options] [arguments...]
 
 OPTIONS:
    --copy  Copy the output to the clipboard
