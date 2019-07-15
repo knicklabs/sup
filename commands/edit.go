@@ -14,9 +14,9 @@ var Edit = cli.Command{
 	Action:    actions.Edit,
 	Flags: []cli.Flag{
 		cli.StringFlag{
-			Name:  "app",
+			Name:  "editor",
 			Value: "default",
-			Usage: "App to open list with",
+			Usage: "Choose editor for editing tasks",
 		},
 	},
 }

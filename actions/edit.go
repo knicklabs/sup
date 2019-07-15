@@ -5,8 +5,8 @@ import (
 
 	"gopkg.in/urfave/cli.v1"
 
-	"github.com/knicklabs/sup/utils/cmd"
 	"github.com/knicklabs/sup/utils"
+	"github.com/knicklabs/sup/utils/cmd"
 )
 
 // Edit opens today's tasks in default editor.
@@ -18,6 +18,6 @@ func Edit(c *cli.Context) error {
 		return err
 	}
 
-	cmd.Open(path.Join(dir, fn), c.String("app"))
+	cmd.Open(path.Join(dir, fn), c.String("editor"))
 	return nil
 }

@@ -17,6 +17,7 @@ func main() {
 	app.Version = "0.1.0"
 	app.Commands = []cli.Command{
 		commands.Add,
+		commands.Config,
 		commands.Copy,
 		commands.List,
 		commands.Edit,
