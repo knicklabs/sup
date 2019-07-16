@@ -44,9 +44,12 @@ func getFilename(daysFromNow int) string {
 }
 
 func getPrevFilename(dir string, fn string) (string, error) {
+	pfn := fn
 	files, err := ioutil.ReadDir(dir)
+	// Even if we cannot read this dir, the program is still useful.
+	// Proceed without previous file.
 	if err != nil {
-		return "", err
+		return "", nil
 	}
 
 	match := -1
@@ -58,12 +61,16 @@ func getPrevFilename(dir string, fn string) (string, error) {
 
 	if match >= 0 {
 		prevFile := files[match]
-		return prevFile.Name(), nil
+		pfn = prevFile.Name()
 	} else if len(files) > 0 {
-		return files[len(files)-1].Name(), nil
+		pfn = files[len(files)-1].Name()
 	}
 
-	return "", &fileNotFoundError{"Previous tasks not found"}
+	if pfn == fn {
+		return "", &fileNotFoundError{"Previous tasks not found"}
+	}
+
+	return pfn, nil
 }
 
 // NewCollection initializes a collection.
@@ -79,6 +86,7 @@ func NewCollection(cfg *config.Config) (*Collection, error) {
 		if _, ok := err.(*fileNotFoundError); !ok {
 			return nil, err
 		}
+		prevFn = ""
 	}
 
 	return &Collection{
@@ -93,8 +101,11 @@ func NewCollection(cfg *config.Config) (*Collection, error) {
 // Current returns the current tasks.
 func (c *Collection) currentTasks() (string, error) {
 	if _, err := os.Stat(c.CurrFile); err == nil {
-		data, err := ioutil.ReadFile(c.CurrFile)
-		return strings.Trim(string(data), "\n"), err
+		dat, err := ioutil.ReadFile(c.CurrFile)
+		if err != nil {
+			return "", err
+		}
+		return strings.Trim(string(dat), "\n"), nil
 	} else if os.IsNotExist(err) {
 		return "- No tasks today!", nil
 	} else {
@@ -104,19 +115,30 @@ func (c *Collection) currentTasks() (string, error) {
 
 // Previous returns the previous tasks.
 func (c *Collection) previousTasks() (string, error) {
-	if len(c.PrevFile) == 0 {
+	if len(c.PrevFn) == 0 {
 		return "- No previous tasks!", nil
 	}
 
-	dat, err := ioutil.ReadFile(c.PrevFile)
-	if err != nil {
+	if _, err := os.Stat(c.PrevFile); err == nil {
+		dat, err := ioutil.ReadFile(c.PrevFile)
+		if err != nil {
+			return "", err
+		}
+		return strings.Trim(string(dat), "\n"), nil
+	} else if os.IsNotExist(err) {
+		return "- No previous tasks!", nil
+	} else {
 		return "", err
 	}
-	return strings.Trim(string(dat), "\n"), err
 }
 
 // Add adds a task to the current file
 func (c *Collection) Add(dat string) error {
+	err := os.MkdirAll(c.Dir, 0755)
+	if err != nil {
+		return err
+	}
+
 	f, err := os.OpenFile(c.CurrFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return err
