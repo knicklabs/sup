@@ -3,6 +3,7 @@ package actions
 import (
 	"fmt"
 
+	"github.com/knicklabs/sup/config"
 	"github.com/knicklabs/sup/tasks"
 	"github.com/knicklabs/sup/utils/cmd"
 
@@ -12,22 +13,32 @@ import (
 // List lists today's tasks or lists the previous
 // day's tasks if `prev` flag is true.
 func List(c *cli.Context) error {
-	var txt string
+	var dat string
 	var err error
-	
-	if c.Bool("prev") == true {
-		txt, err = tasks.Previous()
-	} else {
-		txt, err = tasks.Current()
-	}
-	
+
+	cfg, err := config.Get()
 	if err != nil {
 		return err
 	}
 
-	fmt.Println(txt)
+	col, err := tasks.NewCollection(cfg)
+	if err != nil {
+		return err
+	}
+
+	if c.Bool("prev") == true {
+		dat, err = col.Previous()
+	} else {
+		dat, err = col.Current()
+	}
+
+	if err != nil {
+		return err
+	}
+
+	fmt.Print(dat)
 	if c.Bool("copy") == true {
-		cmd.Copy(txt)
+		cmd.Copy(dat)
 	}
 
 	return nil

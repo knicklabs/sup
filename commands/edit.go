@@ -15,8 +15,11 @@ var Edit = cli.Command{
 	Flags: []cli.Flag{
 		cli.StringFlag{
 			Name:  "editor",
-			Value: "default",
 			Usage: "Choose editor for editing tasks",
+		},
+		cli.BoolFlag{
+			Name: "prev",
+			Usage: "Edit the previous day's tasks",
 		},
 	},
 }

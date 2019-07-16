@@ -3,30 +3,23 @@ package actions
 import (
 	"fmt"
 
-	"github.com/knicklabs/sup/utils"
+	"github.com/knicklabs/sup/config"
+	"github.com/knicklabs/sup/tasks"
 
 	"gopkg.in/urfave/cli.v1"
 )
 
 // Add adds a task to Today's file.
 func Add(c *cli.Context) error {
-	fn := utils.GetCurrentFilename()
-
-	dir, err := utils.GetTasksDir()
+	cfg, err := config.Get()
 	if err != nil {
 		return err
 	}
 
-	err = utils.MakeDir(dir)
+	col, err := tasks.NewCollection(cfg)
 	if err != nil {
 		return err
 	}
 
-	err = utils.WriteStringToFile(dir, fn, fmt.Sprintf("\n- %s", c.Args().First()))
-	if err != nil {
-		return err
-	}
-
-	fmt.Println("Added task: ", c.Args().First())
-	return nil
+	return col.Add(fmt.Sprintf("\n- %s", c.Args().First()))
 }

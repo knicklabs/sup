@@ -2,19 +2,24 @@ package actions
 
 import (
 	"fmt"
-	
-	"github.com/knicklabs/sup/utils"
+
+	"github.com/knicklabs/sup/config"
 
 	"gopkg.in/urfave/cli.v1"
 )
 
 // Which displays the location of tasks
 func Which(c *cli.Context) error {
-	dir, err := utils.GetTasksDir()
+	cfg, err := config.Get()
 	if err != nil {
 		return err
 	}
 
-	fmt.Println(dir)
+	dir, err := cfg.AbsoluteTasksPath()
+	if err != nil {
+		return err
+	}
+
+	fmt.Print(dir)
 	return nil
 }

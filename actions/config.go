@@ -8,16 +8,9 @@ import (
 	"github.com/knicklabs/sup/config"
 )
 
-func output(cfg *config.Config) error {
-	dir, err := cfg.AbsoluteTasksPath()
-	if err != nil {
-		return err
-	}
-
+func output(cfg *config.Config) {
 	fmt.Printf("Dir:    %s\n", cfg.Dir)
-	fmt.Printf("Editor: %s\n\n", cfg.Editor)
-	fmt.Printf("Your tasks are saved to %s", dir)
-	return nil
+	fmt.Printf("Editor: %s", cfg.Editor)
 }
 
 // Config configures SUP
@@ -32,7 +25,8 @@ func Config(c *cli.Context) error {
 		if err != nil {
 			return err
 		}
-		return output(cfg)
+		output(cfg)
+		return nil
 	}
 
 	nDir := c.String("dir")
@@ -56,5 +50,6 @@ func Config(c *cli.Context) error {
 		}
 	}
 
-	return output(cfg)
+	output(cfg)
+	return nil
 }
