@@ -44,10 +44,11 @@ USAGE:
    sup [global options] command [command options] [arguments...]
 
 VERSION:
-   0.1.0
+   0.2.0
 
 COMMANDS:
      add, a, new, n  Add a new task for Today
+     config          configures SUP
      copy, cp        Copy Yesterday's and Today's tasks
      list, ls        List Today's tasks
      edit, e         Edit Today's tasks
