@@ -25,7 +25,7 @@ Finally, move the executable binary into your path.
 mv sup /usr/local/bin/sup
 ```
 
-Alternatively, put `sup` in a customer directory and add it to your path.
+Alternatively, put `sup` in a custom directory and add it to your path.
 
 ```
 echo "PATH:\$PATH:/path/to/dir" >> ~/.bash_profile
