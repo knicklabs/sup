@@ -4,27 +4,40 @@
 
 ## Installation
 
-1. Download the latest release from [releases](https://github.com/knicklabs/sup/releases).
-2. Copy the binary to the desired directory on your computer.
-3. Rename the binary to `sup` (on Linux and Mac) or `sup.exe` (on Windows).
-4. Make the file exuctable with `chmod +x sup` (on Linux and Mac)
-5. Add the path to that directory to your path.
+Download the latest release from [releases](https://github.com/knicklabs/sup/releases).
+Choose the version for your operating system and architecture.
 
-Here's an example of how to add a directory to your path in bash:
+Unzip the desired version and rename it to `sup` or `sup.exe` (on Windows).
+
+```
+unzip sup_darwin_amd64.zip && mv sup_darwin_amd64 sup
+```
+
+On Linux and Mac, make the file executable. This is not required on Windows. 
+
+```
+chmod +x sup
+```
+
+Finally, move the executable binary into your path.
+
+```
+mv sup /usr/local/bin/sup
+```
+
+Alternatively, put `sup` in a customer directory and add it to your path.
 
 ```
 echo "PATH:\$PATH:/path/to/dir" >> ~/.bash_profile
 ```
 
-In the above example, replace `/path/to/dir` with the path to the binary.
-
-Restart your terminal or run `source ~/.bash_profile` for changes to take effect.
+After you've installed `sup` on your system, just type `sup` in your terminal to use the application.
 
 ### Dependencies
 
-The Linux version requires xclip. Without xclip, copy functionality will not work. Install xclip on Debian-based distributions with `sudo apt install xclip`.
+There are no dependencies on Mac and Windows.
 
-There are no dependencies for Mac or Windows.
+The Linux version requires xclip. Without xclip, copy functionality will not work. Install xclip on Debian-based distributions with `sudo apt install xclip`.
 
 ## Usage
 
