@@ -20,6 +20,6 @@ func Which(c *cli.Context) error {
 		return err
 	}
 
-	fmt.Print(dir)
+	fmt.Println(dir)
 	return nil
 }

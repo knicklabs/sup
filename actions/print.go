@@ -23,11 +23,12 @@ func Print(c *cli.Context) error {
 	}
 
 	dat, err := col.CurrentAndPrevious()
+
 	if err != nil {
 		return err
 	}
 
-	fmt.Print(dat)
+	fmt.Println(dat)
 	if c.Bool("copy") == true {
 		cmd.Copy(dat)
 	}

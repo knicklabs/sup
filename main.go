@@ -14,7 +14,7 @@ func main() {
 
 	app.Name = "sup"
 	app.Usage = "simple task tracker for daily standups"
-	app.Version = "0.1.0"
+	app.Version = "0.2.0"
 	app.Commands = []cli.Command{
 		commands.Add,
 		commands.Config,

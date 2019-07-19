@@ -183,8 +183,15 @@ func (c *Collection) Previous() (string, error) {
 		return "", err
 	}
 
+	var title string
+	if len(c.PrevFn) > 0 {
+		title = fmt.Sprintf("Previously (%s)", dateFromFn(c.PrevFn))
+	} else {
+		title = "Previously"
+	}
+
 	return strings.Join([]string{
-		fmt.Sprintf("Previously (%s)", dateFromFn(c.PrevFn)),
+		title,
 		dat,
 	}, "\n"), nil
 }

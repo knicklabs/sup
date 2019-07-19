@@ -10,7 +10,7 @@ import (
 
 func output(cfg *config.Config) {
 	fmt.Printf("Dir:    %s\n", cfg.Dir)
-	fmt.Printf("Editor: %s", cfg.Editor)
+	fmt.Printf("Editor: %s\n", cfg.Editor)
 }
 
 // Config configures SUP
