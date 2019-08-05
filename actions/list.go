@@ -26,7 +26,11 @@ func List(c *cli.Context) error {
 		return err
 	}
 
-	if c.Bool("prev") == true {
+	d := c.String("date")
+	
+	if len(d) > 0 {
+		dat, err = col.Date(d)
+	} else if (c.Bool("prev") == true) {
 		dat, err = col.Previous()
 	} else {
 		dat, err = col.Current()
