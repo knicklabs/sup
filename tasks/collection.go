@@ -8,6 +8,8 @@ import (
 	"strings"
 	"time"
 
+	"gopkg.in/kyokomi/emoji.v1"
+
 	"github.com/knicklabs/sup/config"
 )
 
@@ -73,6 +75,34 @@ func getPrevFilename(dir string, fn string) (string, error) {
 	return pfn, nil
 }
 
+func fileToString(file string) (string, error) {
+	if _, err := os.Stat(file); err == nil {
+		data, err := ioutil.ReadFile(file)
+		if err != nil {
+			return "", err
+		}
+		return emoji.Sprint(strings.Trim(string(data), "\n")), nil
+	} else if os.IsNotExist(err) {
+		return "- No tasks today!", nil
+	} else {
+		return "", err
+	}
+}
+
+func generateOutput(title, body string) string {
+	return strings.Join([]string{
+		title,
+		body,
+	}, "\n")
+}
+
+func generateTitle(base, fn string) string {
+	if len(fn) > 0 {
+		return fmt.Sprintf("%s (%s)", base, dateFromFn(fn))
+	}
+	return base
+}
+
 // NewCollection initializes a collection.
 func NewCollection(cfg *config.Config) (*Collection, error) {
 	dir, err := cfg.AbsoluteTasksPath()
@@ -98,38 +128,12 @@ func NewCollection(cfg *config.Config) (*Collection, error) {
 	}, nil
 }
 
-// Current returns the current tasks.
 func (c *Collection) currentTasks() (string, error) {
-	if _, err := os.Stat(c.CurrFile); err == nil {
-		dat, err := ioutil.ReadFile(c.CurrFile)
-		if err != nil {
-			return "", err
-		}
-		return strings.Trim(string(dat), "\n"), nil
-	} else if os.IsNotExist(err) {
-		return "- No tasks today!", nil
-	} else {
-		return "", err
-	}
+	return fileToString(c.CurrFile)
 }
 
-// Previous returns the previous tasks.
 func (c *Collection) previousTasks() (string, error) {
-	if len(c.PrevFn) == 0 {
-		return "- No previous tasks!", nil
-	}
-
-	if _, err := os.Stat(c.PrevFile); err == nil {
-		dat, err := ioutil.ReadFile(c.PrevFile)
-		if err != nil {
-			return "", err
-		}
-		return strings.Trim(string(dat), "\n"), nil
-	} else if os.IsNotExist(err) {
-		return "- No previous tasks!", nil
-	} else {
-		return "", err
-	}
+	return fileToString(c.PrevFile)
 }
 
 // Add adds a task to the current file
@@ -150,15 +154,13 @@ func (c *Collection) Add(dat string) error {
 
 // Current returns the current tasks
 func (c *Collection) Current() (string, error) {
-	dat, err := c.currentTasks()
+	body, err := c.currentTasks()
 	if err != nil {
 		return "", err
 	}
-
-	return strings.Join([]string{
-		fmt.Sprintf("Today (%s)", dateFromFn(c.CurrFn)),
-		dat,
-	}, "\n"), nil
+	
+	title := generateTitle("Current", c.CurrFn)
+	return generateOutput(title, body), nil
 }
 
 // CurrentAndPrevious returns the current and previous tasks.
@@ -167,31 +169,20 @@ func (c *Collection) CurrentAndPrevious() (string, error) {
 	if err != nil {
 		return "", err
 	}
-
 	curr, err := c.Current()
 	if err != nil {
 		return "", err
 	}
-
 	return strings.Join([]string{prev, curr}, "\n\n"), nil
 }
 
 // Previous returns the previous tasks
 func (c *Collection) Previous() (string, error) {
-	dat, err := c.previousTasks()
+	body, err := c.previousTasks()
 	if err != nil {
 		return "", err
 	}
 
-	var title string
-	if len(c.PrevFn) > 0 {
-		title = fmt.Sprintf("Previously (%s)", dateFromFn(c.PrevFn))
-	} else {
-		title = "Previously"
-	}
-
-	return strings.Join([]string{
-		title,
-		dat,
-	}, "\n"), nil
+	title := generateTitle("Previously", c.PrevFn)
+	return generateOutput(title, body), nil
 }
