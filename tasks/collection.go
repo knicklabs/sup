@@ -16,6 +16,7 @@ import (
 const (
 	dateFmt = "2006-01-02"
 	fileExt = "md"
+	notFound = "- No tasks!"
 )
 
 // Collection represents a collection of tasks
@@ -75,20 +76,6 @@ func getPrevFilename(dir string, fn string) (string, error) {
 	return pfn, nil
 }
 
-func fileToString(file string) (string, error) {
-	if _, err := os.Stat(file); err == nil {
-		data, err := ioutil.ReadFile(file)
-		if err != nil {
-			return "", err
-		}
-		return emoji.Sprint(strings.Trim(string(data), "\n")), nil
-	} else if os.IsNotExist(err) {
-		return "- No tasks today!", nil
-	} else {
-		return "", err
-	}
-}
-
 func generateOutput(title, body string) string {
 	return strings.Join([]string{
 		title,
@@ -128,12 +115,30 @@ func NewCollection(cfg *config.Config) (*Collection, error) {
 	}, nil
 }
 
+func (c *Collection) fileToString(file string) (string, error) {
+	if (file == c.Dir) {
+		return notFound, nil
+	}
+
+	if _, err := os.Stat(file); err == nil {
+		data, err := ioutil.ReadFile(file)
+		if err != nil {
+			return "", err
+		}
+		return emoji.Sprint(strings.Trim(string(data), "\n")), nil
+	} else if os.IsNotExist(err) {
+		return notFound, nil
+	} else {
+		return "", err
+	}
+}
+
 func (c *Collection) currentTasks() (string, error) {
-	return fileToString(c.CurrFile)
+	return c.fileToString(c.CurrFile)
 }
 
 func (c *Collection) previousTasks() (string, error) {
-	return fileToString(c.PrevFile)
+	return c.fileToString(c.PrevFile)
 }
 
 // Add adds a task to the current file
