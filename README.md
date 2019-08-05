@@ -57,7 +57,7 @@ USAGE:
    sup [global options] command [command options] [arguments...]
 
 VERSION:
-   0.2.0
+   0.3.0
 
 COMMANDS:
      add, a, new, n  Add a new task for Today
@@ -95,6 +95,14 @@ To add a new task:
 ```
 sup add "Write a blog post"
 ```
+
+You can use emojis when adding tasks:
+
+```
+sup add ":laughing: Tell a funny joke"
+```
+
+See this [Emoji Cheat Sheet](https://www.webfx.com/tools/emoji-cheat-sheet/) for a list of supported Emojis.
 
 ## Thanks
 
