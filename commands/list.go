@@ -21,5 +21,9 @@ var List = cli.Command{
 			Name:  "prev",
 			Usage: "Show the previous day's tasks",
 		},
+		cli.StringFlag{
+			Name: "date",
+			Usage: "Show the date's tasks. E.g. \"2019-12-31\"",
+		},
 	},
 }

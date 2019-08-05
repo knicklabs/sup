@@ -137,6 +137,11 @@ func (c *Collection) currentTasks() (string, error) {
 	return c.fileToString(c.CurrFile)
 }
 
+func (c *Collection) dateTasks(d string) (string, error) {
+	fn := path.Join(c.Dir, fmt.Sprintf("%s.%s", d, fileExt))
+	return c.fileToString(fn)
+}
+
 func (c *Collection) previousTasks() (string, error) {
 	return c.fileToString(c.PrevFile)
 }
@@ -179,6 +184,16 @@ func (c *Collection) CurrentAndPrevious() (string, error) {
 		return "", err
 	}
 	return strings.Join([]string{prev, curr}, "\n\n"), nil
+}
+
+// Date returns the date's tasks
+func (c *Collection) Date(d string) (string, error) {
+	body, err := c.dateTasks(d)
+	if err != nil {
+		return "", err
+	}
+	title := generateTitle("Date", d)
+	return generateOutput(title, body), nil
 }
 
 // Previous returns the previous tasks
